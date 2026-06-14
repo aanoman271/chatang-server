@@ -21,4 +21,21 @@ router.post("/create-new-chat", authMiddleWare, async (req, res) => {
   }
 });
 
+router.get("/get-all-chats", authMiddleWare, async (req, res) => {
+  try {
+    const allChats = await Chat.find({ members: { $in: req.body.userId } });
+
+    res.status(201).send({
+      message: "chat fetches succesfully ",
+      succes: true,
+      data: allChats,
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error.message,
+      succes: false,
+    });
+  }
+});
+
 export default router;
