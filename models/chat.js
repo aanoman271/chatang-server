@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
-const chatScema = new mongoose.Schema(
+const chatSchema = new mongoose.Schema(
   {
     members: {
       type: [{ type: mongoose.Schema.ObjectId, ref: "users" }],
     },
-    lastMassages: {
+    lastMessage: {
       type: mongoose.Schema.ObjectId,
       ref: "message",
     },
@@ -16,4 +16,5 @@ const chatScema = new mongoose.Schema(
   },
   { timestamps: true },
 );
-export default mongoose.model("Chat", chatScema);
+
+export default mongoose.model("Chat", chatSchema);

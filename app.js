@@ -3,6 +3,7 @@ import cors from "cors";
 import authRouter from "./controler/authControlar.js";
 import userRouter from "./controler/userControler.js";
 import chatRouter from "./controler/chatControler.js";
+import messageRouter from "./controler/messageControler.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/chat", chatRouter);
+app.use("/api/message", messageRouter);
 
 app.get("/", (req, res) => {
   res.send("Server is running");

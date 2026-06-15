@@ -9,7 +9,6 @@ const router = express.Router();
 // ==================== SIGNUP API ====================
 router.post("/signup", async (req, res) => {
   try {
-    console.log("Req Body Data:", req.body);
     const { email, password } = req.body;
 
     if (!email || !password) {
