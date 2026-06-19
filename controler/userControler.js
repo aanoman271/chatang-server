@@ -4,7 +4,7 @@ import express from "express";
 const router = express.Router();
 router.get("/get-logged-user", authMiddleWare, async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.body.userId });
+    const user = await User.findOne({ _id: req.userId });
 
     if (user) {
       user.password = undefined;
@@ -25,8 +25,9 @@ router.get("/get-logged-user", authMiddleWare, async (req, res) => {
 // get all user
 router.get("/get-all-user", authMiddleWare, async (req, res) => {
   try {
-    const Userid = req.body.userId;
-    const allUsers = await User.find({ _id: { $ne: Userid } });
+    const userId = req.userId;
+    console.log(userId);
+    const allUsers = await User.find({ _id: { $ne: userId } });
 
     return res.send({
       message: "all users fetches successfully",

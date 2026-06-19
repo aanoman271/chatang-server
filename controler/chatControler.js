@@ -6,34 +6,42 @@ const router = express.Router();
 
 router.post("/create-new-chat", authMiddleWare, async (req, res) => {
   try {
-    const chat = new Chat(req.body);
+    const { members } = req.body;
+
+    if (!members.includes(req.user.userId)) {
+      members.push(req.user.userId);
+    }
+
+    const chat = new Chat({ members });
     const saveChat = await chat.save();
+
     res.status(201).send({
-      message: "create a chat succesfully ",
-      succes: true,
+      message: "create a chat successfully",
+      success: true,
       data: saveChat,
     });
   } catch (error) {
     res.status(400).send({
       message: error.message,
-      succes: false,
+      success: false,
     });
   }
 });
 
 router.get("/get-all-chats", authMiddleWare, async (req, res) => {
   try {
-    const allChats = await Chat.find({ members: { $in: req.body.userId } });
+    const currentUserId = req.userId;
+    const allChats = await Chat.find({ members: { $in: [currentUserId] } });
 
-    res.status(201).send({
-      message: "chat fetches succesfully ",
-      succes: true,
+    res.status(200).send({
+      message: "chat fetches successfully",
+      success: true,
       data: allChats,
     });
   } catch (error) {
     res.status(400).send({
       message: error.message,
-      succes: false,
+      success: false,
     });
   }
 });
